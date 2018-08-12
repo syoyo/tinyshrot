@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <malloc.h>
 #include <math.h>
+#include <stdlib.h>   // abs()
 
 /*
  * Builds rotation matrix for spherical harmoinics.
@@ -106,7 +107,7 @@ void tinysh_rotation(double **ret, unsigned int l, double a, double b, double r)
 
   d = (double **)malloc(sizeof(double *) * (l + 1));
 
-  for (i = 0; i <= l; i++) {
+  for (i = 0; i <= (int)l; i++) {
     d[i] = (double *)malloc(sizeof(double) * (2 * l + 1) * (2 * l + 1));
   }
 
@@ -135,7 +136,7 @@ void tinysh_rotation(double **ret, unsigned int l, double a, double b, double r)
 
   buildcoeff(ret[1], d[1], 1, a, r);
 
-  for (i = 2; i <= l; i++) {
+  for (i = 2; i <= (int)l; i++) {
     for (m = 0; m <= i - 2; m++) {
       for (md = -m; md <= m; md++) {
         mid = map(i, m, md);
@@ -191,7 +192,7 @@ void tinysh_rotation(double **ret, unsigned int l, double a, double b, double r)
     buildcoeff(ret[i], d[i], i, a, r);
   }
 
-  for (i = 0; i <= l; i++) {
+  for (i = 0; i <= (int)l; i++) {
     free(d[i]);
   }
   free(d);
